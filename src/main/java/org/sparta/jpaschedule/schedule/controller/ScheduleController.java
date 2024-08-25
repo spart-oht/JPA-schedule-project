@@ -8,7 +8,6 @@ import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
 import org.sparta.jpaschedule.schedule.dto.response.ScheduleResponseDto;
 import org.sparta.jpaschedule.schedule.entity.Schedule;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

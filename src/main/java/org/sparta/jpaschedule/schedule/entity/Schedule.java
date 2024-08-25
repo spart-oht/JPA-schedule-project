@@ -5,11 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.sparta.jpaschedule.common.entity.BaseTimestampEntity;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
