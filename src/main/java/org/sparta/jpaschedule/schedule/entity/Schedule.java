@@ -4,6 +4,7 @@ package org.sparta.jpaschedule.schedule.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.sparta.jpaschedule.common.entity.BaseTimestampEntity;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,8 +27,8 @@ public class Schedule extends BaseTimestampEntity {
     @Column(nullable = false, length = 30)
     private String writer;
 
-    @Column(nullable = false, length = 30)
-    private String to_do;
+    @Column(name = "to_do", nullable = false, length = 30)
+    private String toDo;
 
     // default 255
     @Column(nullable = false)
@@ -40,4 +41,11 @@ public class Schedule extends BaseTimestampEntity {
 
     // 해당 엔티티에 넣어도 순서가 보장이 안됨 알아본 바로는 JPA와 Hibernate 는 순서를 보장하지 않음
     // 그냥 원래대로 공통처리하고 직접 순서를 바꾸기로 결정
+
+
+    public Schedule(ScheduleEditDto scheduleEditDto) {
+        this.writer = scheduleEditDto.getWriter();
+        this.toDo = scheduleEditDto.getToDo();
+        this.content = scheduleEditDto.getContent();
+    }
 }
