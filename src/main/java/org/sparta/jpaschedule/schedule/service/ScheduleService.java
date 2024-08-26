@@ -1,8 +1,10 @@
 package org.sparta.jpaschedule.schedule.service;
 
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
 import org.sparta.jpaschedule.schedule.entity.Schedule;
+import org.springframework.data.domain.Page;
 
 public interface ScheduleService {
 
@@ -34,5 +36,13 @@ public interface ScheduleService {
      * @return scheduleResponseDto
      */
     Schedule findSchedule(Long id);
+
+    /**
+     *
+     * @param scheduleListDto
+     * @return scheduleResponseDto
+     */
+    Page<Schedule> getSchedules(ScheduleListDto scheduleListDto);
+
 
 }

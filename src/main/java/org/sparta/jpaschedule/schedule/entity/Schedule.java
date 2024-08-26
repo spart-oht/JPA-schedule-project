@@ -3,9 +3,13 @@ package org.sparta.jpaschedule.schedule.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.sparta.jpaschedule.comment.entity.Comment;
 import org.sparta.jpaschedule.common.entity.BaseTimestampEntity;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +32,9 @@ public class Schedule extends BaseTimestampEntity {
     // default 255
     @Column(nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
+    List<Comment> comments = new ArrayList<>();
 
     // BaseTimestampEntity 를 상속받아 공통으로 처리
     // id  컬럼 다음으로 생성일, 수정일, 작성자, 댓글 순으로 컬럼이 생성됨

@@ -5,13 +5,19 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
+import org.sparta.jpaschedule.schedule.dto.response.ScheduleListResponseDto;
 import org.sparta.jpaschedule.schedule.dto.response.ScheduleResponseDto;
 import org.sparta.jpaschedule.schedule.entity.Schedule;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/schedule")
@@ -81,6 +87,34 @@ public class ScheduleController {
                 .build();
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", scheduleResponseDto), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param scheduleListDto
+     * @return scheduleResponseDto
+     */
+    @GetMapping
+    public ResponseEntity<CommonResponseDto<List<ScheduleListResponseDto>>> getSchedules(@Valid @ModelAttribute ScheduleListDto scheduleListDto) {
+
+        Page<Schedule> getSchedules = scheduleService.getSchedules(scheduleListDto);
+
+        List<ScheduleListResponseDto> scheduleResponseList = new ArrayList<>();
+
+        for(Schedule schedule : getSchedules){
+            scheduleResponseList.add(
+                    ScheduleListResponseDto.builder()
+                            .toDo(schedule.getToDo())
+                            .content(schedule.getContent())
+                            .commentCount(schedule.getComments().size())
+                            .createdAt(schedule.getCreatedAt())
+                            .updatedAt(schedule.getUpdatedAt())
+                            .writer(schedule.getWriter())
+                            .build()
+            );
+        }
+
+        return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", scheduleResponseList), HttpStatus.OK);
     }
 
 }
