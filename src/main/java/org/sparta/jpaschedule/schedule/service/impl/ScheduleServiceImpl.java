@@ -19,6 +19,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j(topic = "scheduleService")
@@ -46,7 +48,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Schedule getSchedule(Long id) {
-        return scheduleRepository.findById(id).orElse(new Schedule());
+        return scheduleRepository.findById(id).orElse(null);
     }
 
     @Override

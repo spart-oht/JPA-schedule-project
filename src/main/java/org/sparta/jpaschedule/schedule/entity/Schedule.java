@@ -38,6 +38,7 @@ public class Schedule extends BaseTimestampEntity {
 
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     List<UsersScheduls> usersScheduls = new ArrayList<>();
+
     // BaseTimestampEntity 를 상속받아 공통으로 처리
     // id  컬럼 다음으로 생성일, 수정일, 작성자, 댓글 순으로 컬럼이 생성됨
     // 해당 순서를 바꾸는 방법을 찾아봤지만 없음

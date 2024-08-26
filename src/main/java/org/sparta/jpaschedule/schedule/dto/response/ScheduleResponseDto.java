@@ -5,8 +5,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.sparta.jpaschedule.user.dto.response.UserResponseDto;
+import org.sparta.jpaschedule.user.entity.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,4 +30,6 @@ public class ScheduleResponseDto {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private List<UserResponseDto> scheduleUsers;
 }

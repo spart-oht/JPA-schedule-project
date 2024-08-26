@@ -8,7 +8,10 @@ import org.sparta.jpaschedule.schedule.dto.response.ScheduleListResponseDto;
 import org.sparta.jpaschedule.schedule.dto.response.ScheduleResponseDto;
 import org.sparta.jpaschedule.schedule.entity.Schedule;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
+import org.sparta.jpaschedule.user.dto.response.UserResponseDto;
+import org.sparta.jpaschedule.user.entity.User;
 import org.sparta.jpaschedule.usersschedules.dto.request.UsersSchedulesSaveDto;
+import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,12 +59,26 @@ public class ScheduleController {
 
         Schedule getSchedule = scheduleService.getSchedule(id);
 
+        List<UserResponseDto> scheduleUsers = new ArrayList<>();
+
+        for(UsersScheduls userSchedule : getSchedule.getUsersScheduls()){
+            scheduleUsers.add(
+                    UserResponseDto.builder()
+                            .id(userSchedule.getUser().getId())
+                            .userName(userSchedule.getUser().getUserName())
+                            .email(userSchedule.getUser().getEmail())
+                            .build()
+            );
+
+        }
+
         ScheduleResponseDto scheduleResponseDto = ScheduleResponseDto.builder()
                 .id(getSchedule.getId())
                 .userId(getSchedule.getUser().getId())
                 .toDo(getSchedule.getToDo())
                 .content(getSchedule.getContent())
                 .createdAt(getSchedule.getCreatedAt())
+                .scheduleUsers(scheduleUsers)
                 .build();
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", scheduleResponseDto), HttpStatus.OK);
