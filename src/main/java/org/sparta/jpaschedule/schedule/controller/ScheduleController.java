@@ -1,6 +1,7 @@
 package org.sparta.jpaschedule.schedule.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
@@ -25,7 +26,7 @@ public class ScheduleController {
      * @return scheduleResponseDto
      */
     @PostMapping("/edit")
-    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> editSchedule(@RequestBody ScheduleEditDto scheduleEditDto){
+    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> editSchedule(@Valid @RequestBody ScheduleEditDto scheduleEditDto){
 
         Schedule newSchedule = scheduleService.editSchedule(scheduleEditDto);
 
@@ -47,7 +48,7 @@ public class ScheduleController {
      * @return scheduleResponseDto
      */
     @GetMapping("/{id}")
-    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> getSchedule(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> getSchedule(@Valid @PathVariable(value = "id") Long id) {
 
         Schedule getSchedule = scheduleService.getSchedule(id);
 
@@ -69,7 +70,7 @@ public class ScheduleController {
      * @return scheduleResponseDto
      */
     @PostMapping("/update")
-    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> updateSchedule(@RequestBody ScheduleUpdateDto scheduleUpdateDto) {
+    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> updateSchedule(@Valid @RequestBody ScheduleUpdateDto scheduleUpdateDto) {
 
         Schedule getSchedule = scheduleService.updateSchedule(scheduleUpdateDto);
 
