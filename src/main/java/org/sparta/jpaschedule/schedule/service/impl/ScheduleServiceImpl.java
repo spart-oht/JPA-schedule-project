@@ -2,6 +2,7 @@ package org.sparta.jpaschedule.schedule.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.sparta.jpaschedule.common.exception.NotFoundException;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j(topic = "scheduleService")
 public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
@@ -38,7 +40,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional
     public Schedule updateSchedule(ScheduleUpdateDto scheduleUpdateDto) {
-        Schedule findSchedule = this.findSchedule(scheduleUpdateDto.getId());
+        Schedule findSchedule = findSchedule(scheduleUpdateDto.getId());
 
         try {
             findSchedule.setToDo(scheduleUpdateDto.getToDo());
@@ -50,10 +52,10 @@ public class ScheduleServiceImpl implements ScheduleService {
             throw new RuntimeException("수정 중 알수없는 에러가 발생하였습니다.");
         }
 
-
     }
 
-    private Schedule findSchedule(Long id){
-        return scheduleRepository.findById(id).orElseThrow(() -> new NotFoundException("데이터가 존재하지 않습니다."));
+    @Override
+    public Schedule findSchedule(Long id){
+        return scheduleRepository.findById(id).orElseThrow(() -> new NotFoundException("일정 데이터가 존재하지 않습니다."));
     }
 }

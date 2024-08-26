@@ -28,4 +28,11 @@ public interface ScheduleService {
      */
     Schedule updateSchedule(ScheduleUpdateDto scheduleUpdateDto);
 
+    /**
+     *
+     * @param id
+     * @return scheduleResponseDto
+     */
+    Schedule findSchedule(Long id);
+
 }
