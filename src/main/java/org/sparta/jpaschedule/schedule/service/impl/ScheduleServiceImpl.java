@@ -4,6 +4,7 @@ package org.sparta.jpaschedule.schedule.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sparta.jpaschedule.common.exception.NotFoundException;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleDeleteDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
@@ -73,5 +74,20 @@ public class ScheduleServiceImpl implements ScheduleService {
         );
 
         return scheduleRepository.findAll(pageable);
+    }
+
+    @Override
+    @Transactional
+    public void deleteSchedule(ScheduleDeleteDto scheduleDeleteDto) {
+
+        Schedule schedule = findSchedule(scheduleDeleteDto.getId());
+
+        try {
+            scheduleRepository.delete(schedule);
+        } catch (RuntimeException e){
+            throw new RuntimeException("삭제중 알수없는 에러가 발생하였습니다.");
+        }
+
+
     }
 }

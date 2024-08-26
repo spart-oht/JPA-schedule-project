@@ -4,6 +4,7 @@ package org.sparta.jpaschedule.schedule.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleDeleteDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
@@ -115,6 +116,15 @@ public class ScheduleController {
         }
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", scheduleResponseList), HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<CommonResponseDto<Void>> deleteSchedule(@Valid @RequestBody ScheduleDeleteDto scheduleDeleteDto){
+
+        scheduleService.deleteSchedule(scheduleDeleteDto);
+
+        return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", null), HttpStatus.OK);
     }
 
 }

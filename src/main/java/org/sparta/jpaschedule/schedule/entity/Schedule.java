@@ -33,7 +33,7 @@ public class Schedule extends BaseTimestampEntity {
     @Column(nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     List<Comment> comments = new ArrayList<>();
 
     // BaseTimestampEntity 를 상속받아 공통으로 처리
