@@ -12,7 +12,7 @@ import lombok.*;
 public class ScheduleEditDto {
 
     @NotNull(message = "작성유저명은 필수 입니다.")
-    private String writer;
+    private Long userId;
 
     @NotNull(message = "할일 제목 파라미터는 필수입니다.")
     private String toDo;

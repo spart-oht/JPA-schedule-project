@@ -3,11 +3,11 @@ package org.sparta.jpaschedule.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.sparta.jpaschedule.common.entity.BaseTimestampEntity;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
+import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -22,11 +22,19 @@ public class User extends BaseTimestampEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String user_name;
+    @Column(name = "user_name", nullable = false)
+    private String userName;
 
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    List<UsersScheduls> usersScheduls = new ArrayList<>();
+
+    public User(UserSaveDto userSaveDto) {
+        this.userName = userSaveDto.getUserName();
+        this.email = userSaveDto.getEmail();
+    }
 
     // BaseTimestampEntity 를 상속받아 공통으로 처리
     // id  컬럼 다음으로 생성일, 수정일, 작성자, 댓글 순으로 컬럼이 생성됨

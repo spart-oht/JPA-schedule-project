@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class ScheduleResponseDto {
     private Long id;
 
-    private String writer;
+    private Long userId;
 
     private String toDo;
 

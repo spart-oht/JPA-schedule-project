@@ -3,14 +3,15 @@ package org.sparta.jpaschedule.schedule.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.sparta.jpaschedule.usersschedules.dto.request.UsersSchedulesSaveDto;
+import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
 import org.sparta.jpaschedule.common.exception.NotFoundException;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleDeleteDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
+import org.sparta.jpaschedule.schedule.dto.request.*;
 import org.sparta.jpaschedule.schedule.entity.Schedule;
 import org.sparta.jpaschedule.schedule.repository.ScheduleRepository;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
+import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.user.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,15 +24,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j(topic = "scheduleService")
 public class ScheduleServiceImpl implements ScheduleService {
 
+    private final UserService userService;
+
     private final ScheduleRepository scheduleRepository;
 
     @Override
     @Transactional
     public Schedule editSchedule(ScheduleEditDto scheduleEditDto) {
 
-        Schedule schedule = new Schedule(scheduleEditDto);
+        User user = userService.findUser(scheduleEditDto.getUserId());
 
         try {
+            Schedule schedule = new Schedule(scheduleEditDto);
+            schedule.setUser(user);
+
             return scheduleRepository.save(schedule);
         } catch (RuntimeException e){
             throw new RuntimeException("저장이 실패되었습니다.");

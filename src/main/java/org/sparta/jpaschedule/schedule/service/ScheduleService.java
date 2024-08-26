@@ -1,10 +1,8 @@
 package org.sparta.jpaschedule.schedule.service;
 
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleDeleteDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
+import org.sparta.jpaschedule.schedule.dto.request.*;
 import org.sparta.jpaschedule.schedule.entity.Schedule;
+import org.sparta.jpaschedule.usersschedules.dto.request.UsersSchedulesSaveDto;
 import org.springframework.data.domain.Page;
 
 public interface ScheduleService {
@@ -47,4 +45,6 @@ public interface ScheduleService {
 
 
     void deleteSchedule(ScheduleDeleteDto scheduleDeleteDto);
+
+
 }

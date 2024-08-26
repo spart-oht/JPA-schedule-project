@@ -1,17 +1,14 @@
 package org.sparta.jpaschedule.schedule.controller;
 
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleDeleteDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
-import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
+import org.sparta.jpaschedule.schedule.dto.request.*;
 import org.sparta.jpaschedule.schedule.dto.response.ScheduleListResponseDto;
 import org.sparta.jpaschedule.schedule.dto.response.ScheduleResponseDto;
 import org.sparta.jpaschedule.schedule.entity.Schedule;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
+import org.sparta.jpaschedule.usersschedules.dto.request.UsersSchedulesSaveDto;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +36,7 @@ public class ScheduleController {
 
         ScheduleResponseDto scheduleResponseDto = ScheduleResponseDto.builder()
                 .id(newSchedule.getId())
-                .writer(newSchedule.getWriter())
+                .userId(newSchedule.getUser().getId())
                 .toDo(newSchedule.getToDo())
                 .content(newSchedule.getContent())
                 .createdAt(newSchedule.getCreatedAt())
@@ -61,7 +58,7 @@ public class ScheduleController {
 
         ScheduleResponseDto scheduleResponseDto = ScheduleResponseDto.builder()
                 .id(getSchedule.getId())
-                .writer(getSchedule.getWriter())
+                .userId(getSchedule.getUser().getId())
                 .toDo(getSchedule.getToDo())
                 .content(getSchedule.getContent())
                 .createdAt(getSchedule.getCreatedAt())
@@ -76,7 +73,7 @@ public class ScheduleController {
      * @param scheduleUpdateDto
      * @return scheduleResponseDto
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> updateSchedule(@Valid @RequestBody ScheduleUpdateDto scheduleUpdateDto) {
 
         Schedule getSchedule = scheduleService.updateSchedule(scheduleUpdateDto);
@@ -110,7 +107,7 @@ public class ScheduleController {
                             .commentCount(schedule.getComments().size())
                             .createdAt(schedule.getCreatedAt())
                             .updatedAt(schedule.getUpdatedAt())
-                            .writer(schedule.getWriter())
+                            .userId(schedule.getUser().getId())
                             .build()
             );
         }
@@ -126,5 +123,4 @@ public class ScheduleController {
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", null), HttpStatus.OK);
     }
-
 }
