@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.sparta.jpaschedule.user.dto.response.UserResponseDto;
-import org.sparta.jpaschedule.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

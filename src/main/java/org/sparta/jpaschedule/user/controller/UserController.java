@@ -1,14 +1,16 @@
 package org.sparta.jpaschedule.user.controller;
 
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
+import org.sparta.jpaschedule.user.config.JwtAuth;
 import org.sparta.jpaschedule.user.dto.request.UserDeleteDto;
 import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
 import org.sparta.jpaschedule.user.dto.request.UserUpdateDto;
 import org.sparta.jpaschedule.user.dto.response.UserResponseDto;
-import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.user.domain.User;
 import org.sparta.jpaschedule.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,10 @@ public class UserController {
 
     private final UserService userService;
 
+    private final JwtAuth jwtAuth;
+
     @PostMapping("/edit")
-    public ResponseEntity<CommonResponseDto<UserResponseDto>> saveUser(@Valid @RequestBody UserSaveDto userSaveDto) {
+    public ResponseEntity<CommonResponseDto<UserResponseDto>> saveUser(@Valid @RequestBody UserSaveDto userSaveDto, HttpServletResponse httpServletResponse) {
 
         User newUser = userService.saveUser(userSaveDto);
 
@@ -35,6 +39,9 @@ public class UserController {
                 .email(newUser.getEmail())
                 .createdAt(newUser.getCreatedAt())
                 .build();
+
+        // 유저 id 로 토큰 발급
+        jwtAuth.createJwt(newUser, httpServletResponse);
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", userResponseDto), HttpStatus.OK);
     }

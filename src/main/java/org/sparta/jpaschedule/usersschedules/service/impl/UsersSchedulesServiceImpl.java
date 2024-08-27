@@ -1,19 +1,15 @@
 package org.sparta.jpaschedule.usersschedules.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.sparta.jpaschedule.common.exception.NotFoundException;
-import org.sparta.jpaschedule.schedule.entity.Schedule;
+import org.sparta.jpaschedule.schedule.domain.Schedule;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
-import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.user.domain.User;
 import org.sparta.jpaschedule.user.service.UserService;
 import org.sparta.jpaschedule.usersschedules.dto.request.UsersSchedulesSaveDto;
 import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
 import org.sparta.jpaschedule.usersschedules.repository.UsersSchedulesRepository;
 import org.sparta.jpaschedule.usersschedules.service.UsersSchedulesService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

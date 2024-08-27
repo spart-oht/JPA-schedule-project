@@ -1,16 +1,10 @@
-package org.sparta.jpaschedule.comment.entity;
+package org.sparta.jpaschedule.comment.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 import org.sparta.jpaschedule.comment.dto.request.CommentEditDto;
-import org.sparta.jpaschedule.common.entity.BaseTimestampEntity;
-import org.sparta.jpaschedule.schedule.entity.Schedule;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
+import org.sparta.jpaschedule.common.domain.BaseTimestampEntity;
+import org.sparta.jpaschedule.schedule.domain.Schedule;
 
 
 @Getter

@@ -3,10 +3,11 @@ package org.sparta.jpaschedule.user.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.exception.NotFoundException;
+import org.sparta.jpaschedule.user.config.PasswordEncoder;
 import org.sparta.jpaschedule.user.dto.request.UserDeleteDto;
 import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
 import org.sparta.jpaschedule.user.dto.request.UserUpdateDto;
-import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.user.domain.User;
 import org.sparta.jpaschedule.user.repository.UserRepository;
 import org.sparta.jpaschedule.user.service.UserService;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
+    private final PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
 
     @Override
     @Transactional
     public User saveUser(UserSaveDto userSaveDto) {
         try {
+            String passwordEncode = passwordEncoder.encode(userSaveDto.getPassword());
+            userSaveDto.setPassword(passwordEncode);
+
             return userRepository.save(new User(userSaveDto));
         } catch (RuntimeException e){
             throw new RuntimeException("유저 등록 중 알수없는 오류가 발생하였습니다.");

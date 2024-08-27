@@ -1,12 +1,12 @@
-package org.sparta.jpaschedule.schedule.entity;
+package org.sparta.jpaschedule.schedule.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.sparta.jpaschedule.comment.entity.Comment;
-import org.sparta.jpaschedule.common.entity.BaseTimestampEntity;
+import org.sparta.jpaschedule.comment.domain.Comment;
+import org.sparta.jpaschedule.common.domain.BaseTimestampEntity;
 import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
 import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
-import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.user.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;

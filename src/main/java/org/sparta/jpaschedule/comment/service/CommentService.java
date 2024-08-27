@@ -3,7 +3,7 @@ package org.sparta.jpaschedule.comment.service;
 import org.sparta.jpaschedule.comment.dto.request.CommentDeleteDto;
 import org.sparta.jpaschedule.comment.dto.request.CommentEditDto;
 import org.sparta.jpaschedule.comment.dto.request.CommentUpdateDto;
-import org.sparta.jpaschedule.comment.entity.Comment;
+import org.sparta.jpaschedule.comment.domain.Comment;
 
 import java.util.List;
 

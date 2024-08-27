@@ -3,8 +3,8 @@ package org.sparta.jpaschedule.usersschedules.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.sparta.jpaschedule.schedule.entity.Schedule;
-import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.schedule.domain.Schedule;
+import org.sparta.jpaschedule.user.domain.User;
 
 @Getter
 @Setter

@@ -2,8 +2,7 @@ package org.sparta.jpaschedule;
 
 
 import org.junit.jupiter.api.Test;
-import org.sparta.jpaschedule.schedule.dto.response.ScheduleResponseDto;
-import org.sparta.jpaschedule.schedule.entity.Schedule;
+import org.sparta.jpaschedule.schedule.domain.Schedule;
 import org.sparta.jpaschedule.schedule.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

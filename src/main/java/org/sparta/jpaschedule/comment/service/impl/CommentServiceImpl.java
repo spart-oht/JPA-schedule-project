@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.sparta.jpaschedule.comment.dto.request.CommentDeleteDto;
 import org.sparta.jpaschedule.comment.dto.request.CommentEditDto;
 import org.sparta.jpaschedule.comment.dto.request.CommentUpdateDto;
-import org.sparta.jpaschedule.comment.entity.Comment;
+import org.sparta.jpaschedule.comment.domain.Comment;
 import org.sparta.jpaschedule.comment.repository.CommentRepository;
 import org.sparta.jpaschedule.comment.service.CommentService;
 import org.sparta.jpaschedule.common.exception.NotFoundException;

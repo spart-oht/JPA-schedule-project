@@ -3,14 +3,12 @@ package org.sparta.jpaschedule.schedule.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.sparta.jpaschedule.usersschedules.dto.request.UsersSchedulesSaveDto;
-import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
 import org.sparta.jpaschedule.common.exception.NotFoundException;
 import org.sparta.jpaschedule.schedule.dto.request.*;
-import org.sparta.jpaschedule.schedule.entity.Schedule;
+import org.sparta.jpaschedule.schedule.domain.Schedule;
 import org.sparta.jpaschedule.schedule.repository.ScheduleRepository;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
-import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.user.domain.User;
 import org.sparta.jpaschedule.user.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

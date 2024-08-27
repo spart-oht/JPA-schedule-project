@@ -1,8 +1,8 @@
-package org.sparta.jpaschedule.user.entity;
+package org.sparta.jpaschedule.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.sparta.jpaschedule.common.entity.BaseTimestampEntity;
+import org.sparta.jpaschedule.common.domain.BaseTimestampEntity;
 import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
 import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
 
@@ -28,12 +28,16 @@ public class User extends BaseTimestampEntity {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false, name = "password")
+    private String password;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     List<UsersScheduls> usersScheduls = new ArrayList<>();
 
     public User(UserSaveDto userSaveDto) {
         this.userName = userSaveDto.getUserName();
         this.email = userSaveDto.getEmail();
+        this.password = userSaveDto.getPassword();
     }
 
     // BaseTimestampEntity 를 상속받아 공통으로 처리

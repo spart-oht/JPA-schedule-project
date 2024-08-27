@@ -1,4 +1,4 @@
-package org.sparta.jpaschedule.common.entity;
+package org.sparta.jpaschedule.common.domain;
 
 
 import jakarta.persistence.Column;

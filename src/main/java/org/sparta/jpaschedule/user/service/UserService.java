@@ -3,7 +3,7 @@ package org.sparta.jpaschedule.user.service;
 import org.sparta.jpaschedule.user.dto.request.UserDeleteDto;
 import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
 import org.sparta.jpaschedule.user.dto.request.UserUpdateDto;
-import org.sparta.jpaschedule.user.entity.User;
+import org.sparta.jpaschedule.user.domain.User;
 
 import java.util.List;
 
