@@ -33,6 +33,9 @@ public class Schedule extends BaseTimestampEntity {
     @Column(nullable = false)
     private String content;
 
+    @Column(length = 30)
+    private String weather;
+
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     List<Comment> comments = new ArrayList<>();
 
@@ -51,4 +54,5 @@ public class Schedule extends BaseTimestampEntity {
         this.toDo = scheduleEditDto.getToDo();
         this.content = scheduleEditDto.getContent();
     }
+
 }

@@ -4,10 +4,15 @@ package org.sparta.jpaschedule.schedule.service.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.sparta.jpaschedule.common.dto.WeatherDto;
 import org.sparta.jpaschedule.common.exception.CommonException;
 import org.sparta.jpaschedule.common.exception.NotFoundException;
-import org.sparta.jpaschedule.schedule.dto.request.*;
+import org.sparta.jpaschedule.common.service.WeatherService;
 import org.sparta.jpaschedule.schedule.domain.Schedule;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleDeleteDto;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleEditDto;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleListDto;
+import org.sparta.jpaschedule.schedule.dto.request.ScheduleUpdateDto;
 import org.sparta.jpaschedule.schedule.repository.ScheduleRepository;
 import org.sparta.jpaschedule.schedule.service.ScheduleService;
 import org.sparta.jpaschedule.user.domain.User;
@@ -20,6 +25,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j(topic = "scheduleService")
@@ -29,15 +37,27 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
+    private final WeatherService weatherService;
+
     @Override
     @Transactional
     public Schedule editSchedule(ScheduleEditDto scheduleEditDto) {
+
+        // 현재 날짜의 mm-dd
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
+        String formattedDate = date.format(formatter);
+
+        // 일정을 생성할 때 날씨 정보를 생성일 기준으로 저장
+        WeatherDto dateWeatherDto = weatherService.searchItem().stream().filter(weatherDto -> weatherDto.getDate().equals(formattedDate))
+                .findFirst().orElse(new WeatherDto());
 
         User user = userService.findUser(scheduleEditDto.getUserId());
 
         try {
             Schedule schedule = new Schedule(scheduleEditDto);
             schedule.setUser(user);
+            schedule.setWeather(dateWeatherDto.getWeather());
 
             return scheduleRepository.save(schedule);
         } catch (RuntimeException e){
