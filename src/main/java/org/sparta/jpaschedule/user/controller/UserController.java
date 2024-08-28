@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
-import org.sparta.jpaschedule.user.config.JwtAuth;
+import org.sparta.jpaschedule.common.config.JwtAuth;
 import org.sparta.jpaschedule.user.dto.request.UserDeleteDto;
 import org.sparta.jpaschedule.user.dto.request.UserLoginDto;
 import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
@@ -101,11 +101,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonResponseDto<User>> loginCheck(@Valid @RequestBody UserLoginDto userLoginDto, HttpServletResponse httpServletResponse){
+    public ResponseEntity<CommonResponseDto<UserResponseDto>> loginCheck(@Valid @RequestBody UserLoginDto userLoginDto, HttpServletResponse httpServletResponse){
 
         User user = userService.loginCheck(userLoginDto, httpServletResponse);
 
-        return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", user), HttpStatus.OK);
+        UserResponseDto userResponseDto = UserResponseDto.builder()
+                .id(user.getId())
+                .userName(user.getUserName())
+                .email(user.getEmail())
+                .grade(user.getGrade())
+                .build();
+
+        return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", userResponseDto), HttpStatus.OK);
     }
 
 }

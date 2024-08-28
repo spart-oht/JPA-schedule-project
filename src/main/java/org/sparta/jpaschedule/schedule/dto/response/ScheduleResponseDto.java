@@ -26,6 +26,8 @@ public class ScheduleResponseDto {
 
     private String content;
 
+    private String weather;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

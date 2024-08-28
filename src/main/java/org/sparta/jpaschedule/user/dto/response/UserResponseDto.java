@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.sparta.jpaschedule.user.domain.UserRoleEnum;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,8 @@ public class UserResponseDto {
     private String userName;
 
     private String email;
+
+    private UserRoleEnum grade;
 
     private LocalDateTime createdAt;
 

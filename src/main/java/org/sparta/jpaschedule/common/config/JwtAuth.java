@@ -1,11 +1,11 @@
-package org.sparta.jpaschedule.user.config;
+package org.sparta.jpaschedule.common.config;
 
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.sparta.jpaschedule.user.domain.User;
 import org.sparta.jpaschedule.user.domain.UserRoleEnum;
-import org.sparta.jpaschedule.user.jwt.JwtUtil;
+import org.sparta.jpaschedule.common.jwt.JwtUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;

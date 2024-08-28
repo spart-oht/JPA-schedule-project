@@ -1,4 +1,4 @@
-package org.sparta.jpaschedule.user.config;
+package org.sparta.jpaschedule.common.config;
 
 
 import at.favre.lib.crypto.bcrypt.BCrypt;

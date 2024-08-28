@@ -1,4 +1,4 @@
-package org.sparta.jpaschedule.user.jwt;
+package org.sparta.jpaschedule.common.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

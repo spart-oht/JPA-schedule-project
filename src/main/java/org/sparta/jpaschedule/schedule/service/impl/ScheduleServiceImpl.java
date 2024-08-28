@@ -75,7 +75,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public Schedule updateSchedule(ScheduleUpdateDto scheduleUpdateDto, HttpServletRequest request) {
 
         User user = (User) request.getAttribute("user");
-        if(userService.checkPermission(user.getGrade())) throw new CommonException(HttpStatus.FORBIDDEN ,"일정 삭제는 관리자 권한이 있는 유저만 가능합니다.");
+        if(!userService.checkPermission(user.getGrade())) throw new CommonException(HttpStatus.FORBIDDEN ,"일정 삭제는 관리자 권한이 있는 유저만 가능합니다.");
 
         Schedule findSchedule = findSchedule(scheduleUpdateDto.getId());
 
@@ -113,7 +113,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void deleteSchedule(ScheduleDeleteDto scheduleDeleteDto, HttpServletRequest request) {
 
         User user = (User) request.getAttribute("user");
-        if(userService.checkPermission(user.getGrade())) throw new CommonException(HttpStatus.FORBIDDEN ,"일정 삭제는 관리자 권한이 있는 유저만 가능합니다.");
+        if(!userService.checkPermission(user.getGrade())) throw new CommonException(HttpStatus.FORBIDDEN ,"일정 삭제는 관리자 권한이 있는 유저만 가능합니다.");
 
         Schedule schedule = findSchedule(scheduleDeleteDto.getId());
 

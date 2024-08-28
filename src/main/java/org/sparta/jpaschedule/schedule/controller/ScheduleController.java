@@ -41,6 +41,7 @@ public class ScheduleController {
                 .userId(newSchedule.getUser().getId())
                 .toDo(newSchedule.getToDo())
                 .content(newSchedule.getContent())
+                .weather(newSchedule.getWeather())
                 .createdAt(newSchedule.getCreatedAt())
                 .build();
 
