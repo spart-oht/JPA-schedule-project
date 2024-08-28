@@ -2,6 +2,7 @@ package org.sparta.jpaschedule.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
+import org.sparta.jpaschedule.user.exception.PasswordNotSameException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,14 +14,27 @@ import java.util.List;
 
 @RestControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler{
 
-    // 특정 exception 에 대한 글로벌 처리
+    // start 특정 exception 에 대한 글로벌 처리
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<CommonResponseDto<Object>> handleNotFoundDataException(NotFoundException ex) {
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        HttpStatus status = HttpStatus.BAD_REQUEST;
         return getErrorResponse(status, ex.getMessage());
     }
+
+    @ExceptionHandler(PasswordNotSameException.class)
+    public ResponseEntity<CommonResponseDto<Object>> handlePasswordNotSameException(NotFoundException ex) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        return getErrorResponse(status, ex.getMessage());
+    }
+
+    @ExceptionHandler(CommonException.class)
+    public ResponseEntity<CommonResponseDto<Object>> handleCommonException(CommonException ex) {
+        return getErrorResponse(ex.getStatus(), ex.getMessage());
+    }
+
+    // end 특정 exception 에 대한 글로벌 처리
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<CommonResponseDto<Object>> handleRuntimeException(RuntimeException ex) {
@@ -28,7 +42,7 @@ public class GlobalExceptionHandler {
         log.info("Runtime error : {}", ex.getMessage());
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        return getErrorResponse(status, "알수없는 오류가 발생하였습니다. 잠시 후 다시 시도해 주십시오.");
+        return getErrorResponse(status, ex.getMessage());
     }
 
 

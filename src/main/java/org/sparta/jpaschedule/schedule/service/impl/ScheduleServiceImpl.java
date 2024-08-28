@@ -1,8 +1,10 @@
 package org.sparta.jpaschedule.schedule.service.impl;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.sparta.jpaschedule.common.exception.CommonException;
 import org.sparta.jpaschedule.common.exception.NotFoundException;
 import org.sparta.jpaschedule.schedule.dto.request.*;
 import org.sparta.jpaschedule.schedule.domain.Schedule;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,10 +52,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public Schedule updateSchedule(ScheduleUpdateDto scheduleUpdateDto) {
+    public Schedule updateSchedule(ScheduleUpdateDto scheduleUpdateDto, HttpServletRequest request) {
+
+        User user = (User) request.getAttribute("user");
+        if(userService.checkPermission(user.getGrade())) throw new CommonException(HttpStatus.FORBIDDEN ,"일정 삭제는 관리자 권한이 있는 유저만 가능합니다.");
+
         Schedule findSchedule = findSchedule(scheduleUpdateDto.getId());
 
         try {
+
             findSchedule.setToDo(scheduleUpdateDto.getToDo());
             findSchedule.setContent(scheduleUpdateDto.getContent());
 
@@ -82,7 +90,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public void deleteSchedule(ScheduleDeleteDto scheduleDeleteDto) {
+    public void deleteSchedule(ScheduleDeleteDto scheduleDeleteDto, HttpServletRequest request) {
+
+        User user = (User) request.getAttribute("user");
+        if(userService.checkPermission(user.getGrade())) throw new CommonException(HttpStatus.FORBIDDEN ,"일정 삭제는 관리자 권한이 있는 유저만 가능합니다.");
 
         Schedule schedule = findSchedule(scheduleDeleteDto.getId());
 
@@ -94,4 +105,5 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
     }
+
 }

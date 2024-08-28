@@ -1,5 +1,6 @@
 package org.sparta.jpaschedule.schedule.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
@@ -89,9 +90,9 @@ public class ScheduleController {
      * @return scheduleResponseDto
      */
     @PutMapping("/update")
-    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> updateSchedule(@Valid @RequestBody ScheduleUpdateDto scheduleUpdateDto) {
+    public ResponseEntity<CommonResponseDto<ScheduleResponseDto>> updateSchedule(@Valid @RequestBody ScheduleUpdateDto scheduleUpdateDto, HttpServletRequest request) {
 
-        Schedule getSchedule = scheduleService.updateSchedule(scheduleUpdateDto);
+        Schedule getSchedule = scheduleService.updateSchedule(scheduleUpdateDto, request);
 
         ScheduleResponseDto scheduleResponseDto = ScheduleResponseDto.builder()
                 .toDo(getSchedule.getToDo())
@@ -132,9 +133,9 @@ public class ScheduleController {
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<CommonResponseDto<Void>> deleteSchedule(@Valid @RequestBody ScheduleDeleteDto scheduleDeleteDto){
+    public ResponseEntity<CommonResponseDto<Void>> deleteSchedule(@Valid @RequestBody ScheduleDeleteDto scheduleDeleteDto, HttpServletRequest request){
 
-        scheduleService.deleteSchedule(scheduleDeleteDto);
+        scheduleService.deleteSchedule(scheduleDeleteDto, request);
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", null), HttpStatus.OK);
     }

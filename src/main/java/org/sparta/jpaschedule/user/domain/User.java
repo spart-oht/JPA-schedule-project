@@ -2,6 +2,8 @@ package org.sparta.jpaschedule.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.sparta.jpaschedule.common.domain.BaseTimestampEntity;
 import org.sparta.jpaschedule.usersschedules.entity.UsersScheduls;
 import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
@@ -16,6 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+//  null인 값은 자동으로 insert 쿼리에 포함되지 않게 세팅하는 어노테이션.
+@DynamicInsert // 애노테이션 추가
 public class User extends BaseTimestampEntity {
 
     @Id
@@ -25,11 +29,16 @@ public class User extends BaseTimestampEntity {
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, name = "password")
     private String password;
+
+    @Column(nullable = false, name = "grade", length = 10)
+    @ColumnDefault("'USER'") // default
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum grade;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     List<UsersScheduls> usersScheduls = new ArrayList<>();

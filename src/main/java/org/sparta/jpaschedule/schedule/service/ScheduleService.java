@@ -1,5 +1,6 @@
 package org.sparta.jpaschedule.schedule.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.sparta.jpaschedule.schedule.dto.request.*;
 import org.sparta.jpaschedule.schedule.domain.Schedule;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public interface ScheduleService {
      * @param scheduleUpdateDto
      * @return scheduleResponseDto
      */
-    Schedule updateSchedule(ScheduleUpdateDto scheduleUpdateDto);
+    Schedule updateSchedule(ScheduleUpdateDto scheduleUpdateDto, HttpServletRequest request);
 
     /**
      *
@@ -43,7 +44,7 @@ public interface ScheduleService {
     Page<Schedule> getSchedules(ScheduleListDto scheduleListDto);
 
 
-    void deleteSchedule(ScheduleDeleteDto scheduleDeleteDto);
+    void deleteSchedule(ScheduleDeleteDto scheduleDeleteDto, HttpServletRequest request);
 
 
 }

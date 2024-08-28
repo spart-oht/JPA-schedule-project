@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.sparta.jpaschedule.common.dto.CommonResponseDto;
 import org.sparta.jpaschedule.user.config.JwtAuth;
 import org.sparta.jpaschedule.user.dto.request.UserDeleteDto;
+import org.sparta.jpaschedule.user.dto.request.UserLoginDto;
 import org.sparta.jpaschedule.user.dto.request.UserSaveDto;
 import org.sparta.jpaschedule.user.dto.request.UserUpdateDto;
 import org.sparta.jpaschedule.user.dto.response.UserResponseDto;
@@ -31,7 +32,7 @@ public class UserController {
     @PostMapping("/edit")
     public ResponseEntity<CommonResponseDto<UserResponseDto>> saveUser(@Valid @RequestBody UserSaveDto userSaveDto, HttpServletResponse httpServletResponse) {
 
-        User newUser = userService.saveUser(userSaveDto);
+        User newUser = userService.saveUser(userSaveDto, httpServletResponse);
 
         UserResponseDto userResponseDto = UserResponseDto.builder()
                 .id(newUser.getId())
@@ -39,9 +40,6 @@ public class UserController {
                 .email(newUser.getEmail())
                 .createdAt(newUser.getCreatedAt())
                 .build();
-
-        // 유저 id 로 토큰 발급
-        jwtAuth.createJwt(newUser, httpServletResponse);
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", userResponseDto), HttpStatus.OK);
     }
@@ -100,6 +98,14 @@ public class UserController {
         userService.deleteUser(userDeleteDto);
 
         return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", null), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<CommonResponseDto<User>> loginCheck(@Valid @RequestBody UserLoginDto userLoginDto, HttpServletResponse httpServletResponse){
+
+        User user = userService.loginCheck(userLoginDto, httpServletResponse);
+
+        return new ResponseEntity<>(new CommonResponseDto<>(HttpStatus.OK, "success", user), HttpStatus.OK);
     }
 
 }
